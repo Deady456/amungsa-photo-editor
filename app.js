@@ -776,6 +776,74 @@ function setupEventListeners() {
     isDragging = false;
   });
 
+  // Touch Handlers for Mobile (Pan & Pinch-to-Zoom)
+  let initialPinchDist = 0;
+  let initialPinchZoom = 1.0;
+
+  canvas.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      isDragging = true;
+      const t = e.touches[0];
+      dragStartX = t.clientX;
+      dragStartY = t.clientY;
+
+      state.activeFrameIndex = getFrameAtMousePosition(t);
+      document.querySelectorAll('.frame-tab').forEach(tab => {
+        tab.classList.toggle('active', parseInt(tab.dataset.frame, 10) === state.activeFrameIndex);
+      });
+      updateFrameUIValues();
+
+      startPanX = state.frames[state.activeFrameIndex].panX;
+      startPanY = state.frames[state.activeFrameIndex].panY;
+    } else if (e.touches.length === 2) {
+      isDragging = false;
+      const t1 = e.touches[0];
+      const t2 = e.touches[1];
+      initialPinchDist = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
+      initialPinchZoom = state.frames[state.activeFrameIndex].zoom || 1.0;
+    }
+  }, { passive: false });
+
+  canvas.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 1 && isDragging) {
+      e.preventDefault();
+      const t = e.touches[0];
+      const dx = (t.clientX - dragStartX) / state.zoomScale;
+      const dy = (t.clientY - dragStartY) / state.zoomScale;
+      const fr = state.frames[state.activeFrameIndex];
+      fr.panX = Math.round(startPanX + dx);
+      fr.panY = Math.round(startPanY + dy);
+      if (framePanX) framePanX.value = fr.panX;
+      if (framePanY) framePanY.value = fr.panY;
+      render();
+    } else if (e.touches.length === 2 && initialPinchDist > 0) {
+      e.preventDefault();
+      const t1 = e.touches[0];
+      const t2 = e.touches[1];
+      const currDist = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
+      const factor = currDist / initialPinchDist;
+      const fr = state.frames[state.activeFrameIndex];
+      fr.zoom = Math.max(0.5, Math.min(3.5, Number((initialPinchZoom * factor).toFixed(2))));
+      updateFrameUIValues();
+      render();
+    }
+  }, { passive: false });
+
+  canvas.addEventListener('touchend', (e) => {
+    if (e.touches.length === 0) {
+      isDragging = false;
+      initialPinchDist = 0;
+    } else if (e.touches.length === 1) {
+      const t = e.touches[0];
+      dragStartX = t.clientX;
+      dragStartY = t.clientY;
+      startPanX = state.frames[state.activeFrameIndex].panX;
+      startPanY = state.frames[state.activeFrameIndex].panY;
+      isDragging = true;
+      initialPinchDist = 0;
+    }
+  });
+
   // ZOOM DI AREA FOTO (DALAM CANVAS): Memperbesar / memperkecil foto di dalam template
   canvas.addEventListener('wheel', (e) => {
     e.preventDefault();
@@ -1406,12 +1474,15 @@ function fitCanvasToScreen() {
   const viewport = document.querySelector('.canvas-viewport');
   if (!viewport) return;
 
-  const vpW = viewport.clientWidth - 48;
-  const vpH = viewport.clientHeight - 48;
+  const isMobile = window.innerWidth <= 900;
+  const padX = isMobile ? 16 : 48;
+  const padY = isMobile ? 16 : 48;
+  const vpW = Math.max(80, viewport.clientWidth - padX);
+  const vpH = Math.max(80, viewport.clientHeight - padY);
 
   const scaleW = vpW / state.canvasW;
   const scaleH = vpH / state.canvasH;
-  state.zoomScale = Math.max(0.25, Math.min(scaleW, scaleH, 0.90));
+  state.zoomScale = Math.max(0.10, Math.min(scaleW, scaleH, 0.95));
 
   applyZoom();
   const btnFit = document.getElementById('btnZoomFit');
