@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amungsa Studio - Web Editor Foto Template Resmi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=9">
+</head>
+<body>
+  <div class="app-container">
+    <!-- TOP NAVBAR -->
+    <header class="navbar">
+      <div class="nav-brand">
+        <div class="brand-logo-badge">
+          <img src="assets/logo.png" alt="Amungsa Logo" id="navLogo">
+        </div>
+        <div class="brand-text">
+          <h1>Amungsa Photo Studio</h1>
+          <span class="badge-tag">Template Generator Resmi &bull; Instagram 4:5</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <div class="ratio-selector">
+          <button type="button" class="btn-toggle active" id="btnRatio45" title="Instagram Portrait Feed">4:5 Feed (1080&times;1350)</button>
+          <button type="button" class="btn-toggle" id="btnRatio11" title="Instagram Square">1:1 Persegi (1080&times;1080)</button>
+        </div>
+        <button type="button" class="btn-action btn-import-glow" id="btnNavImportModal" title="Import foto dan langsung terapkan template">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+          Import Foto Template
+        </button>
+        <button type="button" class="btn-action btn-outline" id="btnCopyClipboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Salin ke Clipboard
+        </button>
+        <!-- DOWNLOAD DROPDOWN BUTTON (PNG, JPG, WEBP) -->
+        <div class="download-dropdown-wrap" id="downloadDropdownWrap">
+          <button type="button" class="btn-action btn-primary" id="btnDownloadMain" title="Unduh Foto">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span id="downloadBtnText">Unduh PNG</span>
+          </button>
+          <button type="button" class="btn-dropdown-arrow" id="btnToggleDownloadMenu" title="Pilih Format Lain (JPG, WebP)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="download-menu" id="downloadMenu">
+            <button type="button" class="download-menu-item active" data-format="png">
+              <span class="fmt-badge badge-png">PNG</span>
+              <div class="fmt-info">
+                <strong>Format PNG (HD)</strong>
+                <small>Kualitas tertinggi tanpa kompresi</small>
+              </div>
+            </button>
+            <button type="button" class="download-menu-item" data-format="jpeg">
+              <span class="fmt-badge badge-jpg">JPG</span>
+              <div class="fmt-info">
+                <strong>Format JPG</strong>
+                <small>Standar Feed Instagram &amp; ringan</small>
+              </div>
+            </button>
+            <button type="button" class="download-menu-item" data-format="webp">
+              <span class="fmt-badge badge-webp">WebP</span>
+              <div class="fmt-info">
+                <strong>Format WebP</strong>
+                <small>Modern, hemat memori &amp; tajam</small>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN BODY -->
+    <div class="main-body">
+      <!-- SIDEBAR CONTROLS -->
+      <aside class="sidebar" id="sidebar">
+        <!-- TABS HEADER -->
+        <div class="tabs-nav">
+          <button class="tab-btn active" data-tab="tab-template">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Template
+          </button>
+          <button class="tab-btn" data-tab="tab-content">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
+            Teks & Badge
+          </button>
+          <button class="tab-btn" data-tab="tab-photos">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            Foto Frame
+          </button>
+          <button class="tab-btn" data-tab="tab-brand">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            Branding
+          </button>
+        </div>
+
+        <!-- TAB 1: TEMPLATE & PRESET -->
+        <div class="tab-content active" id="tab-template">
+          <!-- MENU IMPORT FOTO & TERAPKAN TEMPLATE -->
+          <div class="panel-section import-hero-card">
+            <div class="section-header-flex">
+              <div class="import-title-group">
+                <div class="import-badge-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
+                    <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                  </svg>
+                </div>
+                <div>
+                  <label class="section-title" style="margin:0;">Menu Import Foto</label>
+                  <span class="section-subdesc">Import foto &amp; langsung terapkan ke template</span>
+                </div>
+              </div>
+              <button type="button" class="btn-mini-action" id="btnTriggerQuickImport">
+                + Pilih Foto
+              </button>
+            </div>
+
+            <!-- Quick Import Dropzone -->
+            <div class="quick-import-dropzone" id="quickImportDropzone">
+              <input type="file" id="quickImportFileInput" accept="image/*" multiple style="display:none;">
+              <div class="quick-drop-content">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <span>Klik / Seret Foto ke Sini</span>
+                <small>Mendukung 1 foto atau hingga 3 foto (untuk kolase)</small>
+              </div>
+            </div>
+
+            <!-- Photo Thumbnail & Direct Template Apply Grid -->
+            <div class="quick-apply-panel" id="quickApplyPanel" style="display:none;">
+              <div class="quick-uploaded-header">
+                <span id="quickUploadedCount">1 Foto Di-import:</span>
+                <button type="button" class="btn-text-link" id="btnClearQuickPhotos">&times; Ganti Foto</button>
+              </div>
+              <div class="quick-thumbs-row" id="quickThumbsRow"></div>
+              
+              <label class="quick-apply-label">Terapkan ke Template Desain:</label>
+              <div class="quick-apply-grid">
+                <button type="button" class="btn-tpl-apply" data-apply="tpl1_berita">
+                  <span class="tpl-tag">Tpl 1</span>
+                  <strong>Sinergi &amp; Berita</strong>
+                </button>
+                <button type="button" class="btn-tpl-apply" data-apply="tpl2_dokumentasi">
+                  <span class="tpl-tag">Tpl 2</span>
+                  <strong>Dokumentasi Bersih</strong>
+                </button>
+                <button type="button" class="btn-tpl-apply" data-apply="tpl3_slogan">
+                  <span class="tpl-tag">Tpl 3</span>
+                  <strong>Dari Piring Sehat</strong>
+                </button>
+                <button type="button" class="btn-tpl-apply" data-apply="tpl12_kolase3">
+                  <span class="tpl-tag">Tpl 4</span>
+                  <strong>Kolase 3 Frame</strong>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="panel-section">
+            <label class="section-title">Pilih Template Desain</label>
+            <div class="template-cards-grid">
+              <!-- TEMPLATE 1: BERITA & SINERGI -->
+              <div class="tpl-card active" data-tpl="tpl1_berita">
+                <div class="tpl-icon tpl-icon-berita">
+                  <span class="f-bg-thumb"></span>
+                  <span class="f-top-halo"></span>
+                  <span class="f-badge-tag"></span>
+                  <span class="f-headline-bar"></span>
+                  <span class="f-headline-bar2"></span>
+                  <span class="f-cal-box"></span>
+                  <span class="f-wm-mark"></span>
+                </div>
+                <div class="tpl-info">
+                  <strong>Template 1: Sinergi &amp; Berita (Cover)</strong>
+                  <small>Foto penuh + badge Sinergi + judul berita tebal + kalender + watermark</small>
+                </div>
+              </div>
+
+              <!-- TEMPLATE 2: DOKUMENTASI BERSIH -->
+              <div class="tpl-card" data-tpl="tpl2_dokumentasi">
+                <div class="tpl-icon tpl-icon-dokumentasi">
+                  <span class="f-bg-thumb"></span>
+                  <span class="f-top-halo"></span>
+                  <span class="f-bot-gradient"></span>
+                  <span class="f-wm-mark"></span>
+                </div>
+                <div class="tpl-info">
+                  <strong>Template 2: Dokumentasi Bersih (Showcase)</strong>
+                  <small>Foto penuh bersih + watermark Amungsa Papua + footer resmi (fokus foto)</small>
+                </div>
+              </div>
+
+              <!-- TEMPLATE 3: SLOGAN & PENUTUP -->
+              <div class="tpl-card" data-tpl="tpl3_slogan">
+                <div class="tpl-icon tpl-icon-slogan">
+                  <span class="f-bg-thumb"></span>
+                  <span class="f-top-halo"></span>
+                  <span class="f-bot-gradient"></span>
+                  <span class="f-script-quote"></span>
+                </div>
+                <div class="tpl-info">
+                  <strong>Template 3: Dari Piring Sehat (Slogan Resmi)</strong>
+                  <small>Foto penuh + Grafis resmi "Dari Piring Sehat, Lahir Masa Depan Hebat"</small>
+                </div>
+              </div>
+
+              <!-- TEMPLATE 4: KOLASE 3 FRAME -->
+              <div class="tpl-card" data-tpl="tpl12_kolase3">
+                <div class="tpl-icon tpl-icon-3frames">
+                  <span class="f-box f-l"></span>
+                  <span class="f-box f-c"></span>
+                  <span class="f-box f-r"></span>
+                </div>
+                <div class="tpl-info">
+                  <strong>Template 4: Kolase 3 Frame Melayang</strong>
+                  <small>3 foto rounded melayang bertingkat dengan border putih</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: EDIT TEKS (KHUSUS TEMPLATE 1) -->
+        <div class="tab-content" id="tab-content">
+          <div class="panel-section">
+            <div class="template-context-banner" style="background: rgba(2, 132, 199, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+              <strong style="color: #38bdf8; display: block; font-size: 13px; margin-bottom: 4px;">Teks Template 1 (Cover Berita)</strong>
+              <small style="color: var(--text-muted); font-size: 11px; line-height: 1.4; display: block;">Template 2, 3, dan 4 menggunakan desain grafis resmi terkunci dari file PSD. Anda dapat mengedit teks Badge, Judul, dan Tanggal untuk Template 1 di bawah ini.</small>
+            </div>
+
+            <!-- 1. BADGE KATEGORI -->
+            <div class="form-group">
+              <label for="badgeText">1. Teks Badge (Font Resmi: OCRAExtended)</label>
+              <input type="text" id="badgeText" value="SINERGI AMUNGSA" placeholder="Contoh: SINERGI AMUNGSA, RESPON AMUNGSA">
+              <small style="color:var(--text-muted); font-size:11px; display:block; margin-top:4px;">Font asli OCRAExtended &amp; warna navy dari PSD 1DESIGN AMUNGSA.</small>
+            </div>
+
+            <!-- 2. JUDUL BERITA -->
+            <div class="form-group" style="margin-top: 16px;">
+              <label for="titleText">2. Teks Judul Berita</label>
+              <textarea id="titleText" rows="3">Memperkuat Ikatan dengan
+PUSKESMAS dan Masyarakat
+Bhintuka SP. 13</textarea>
+              <div class="preset-chips" style="margin-top: 8px;">
+                <button type="button" class="chip-btn" id="presetSinergi">Sinergi SP. 13</button>
+                <button type="button" class="chip-btn" id="presetReses">Reses DPRK</button>
+                <button type="button" class="chip-btn" id="presetMasker">2.000 Masker</button>
+                <button type="button" class="chip-btn" id="presetAkreditasi">Akreditasi Puskesmas</button>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 10px;">
+              <label for="titleSize">Ukuran Font Judul: <span id="titleSizeVal">44px</span></label>
+              <input type="range" id="titleSize" min="28" max="64" value="44">
+            </div>
+
+            <!-- 3. TANGGAL & LOKASI -->
+            <div class="form-group" style="margin-top: 16px;">
+              <label>3. Tanggal (Kotak Kalender Poppins PSD)</label>
+              <div class="grid-3col">
+                <div class="form-group">
+                  <label for="dateDay" style="font-size:11px;">Hari (Tanggal)</label>
+                  <input type="text" id="dateDay" value="13" maxlength="4">
+                </div>
+                <div class="form-group">
+                  <label for="dateMonth" style="font-size:11px;">Bulan</label>
+                  <input type="text" id="dateMonth" value="JUNI" maxlength="8">
+                </div>
+                <div class="form-group">
+                  <label for="dateYear" style="font-size:11px;">Tahun</label>
+                  <input type="text" id="dateYear" value="2026" maxlength="6">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="dateLocation">Lokasi Kegiatan (Opsional)</label>
+              <input type="text" id="dateLocation" value="Bhintuka SP. 13" placeholder="Contoh: Mimika, Papua Tengah">
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: FOTO & FRAME -->
+        <div class="tab-content" id="tab-photos">
+          <div class="panel-section">
+            <label class="section-title">Pilih Slot Foto untuk Diedit</label>
+            <div class="frame-selector-tabs">
+              <button class="frame-tab active" data-frame="0">Frame 1 (Kiri)</button>
+              <button class="frame-tab" data-frame="1">Frame 2 (Tengah)</button>
+              <button class="frame-tab" data-frame="2">Frame 3 (Kanan)</button>
+            </div>
+
+            <!-- FRAME CONTROLS BOX -->
+            <div class="frame-editor-box">
+              <div class="frame-upload-dropzone" id="dropZone">
+                <input type="file" id="fileInput" accept="image/*" style="display:none;">
+                <div class="dropzone-content">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  <span>Klik atau Seret Foto ke Sini</span>
+                  <small>Format JPG, PNG, WebP</small>
+                </div>
+              </div>
+
+              <div class="form-group mt-3">
+                <label for="frameZoom">Perbesar / Zoom: <span id="frameZoomVal">100%</span></label>
+                <input type="range" id="frameZoom" min="50" max="250" value="100">
+              </div>
+
+              <div class="grid-2col">
+                <div class="form-group">
+                  <label for="framePanX">Geser Horizontal (X)</label>
+                  <input type="range" id="framePanX" min="-300" max="300" value="0">
+                </div>
+                <div class="form-group">
+                  <label for="framePanY">Geser Vertikal (Y)</label>
+                  <input type="range" id="framePanY" min="-300" max="300" value="0">
+                </div>
+              </div>
+
+              <div class="grid-2col">
+                <div class="form-group">
+                  <label for="frameBrightness">Kecerahan: <span id="frameBrightnessVal">100%</span></label>
+                  <input type="range" id="frameBrightness" min="60" max="150" value="100">
+                </div>
+                <div class="form-group">
+                  <label for="frameContrast">Kontras: <span id="frameContrastVal">100%</span></label>
+                  <input type="range" id="frameContrast" min="60" max="150" value="100">
+                </div>
+              </div>
+
+              <button type="button" class="btn-action btn-outline w-100" id="btnResetFrame">
+                Reset Posisi & Zoom Frame Ini
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: BRANDING & OVERLAY -->
+        <div class="tab-content" id="tab-brand">
+          <div class="panel-section">
+            <label class="section-title">Elemen Resmi Amungsa Foundation</label>
+
+            <!-- LOGO HEADER -->
+            <div class="brand-item-row">
+              <div class="brand-item-info">
+                <strong>Logo Amungsa Cares Papua</strong>
+                <small>Tampil elegan di bagian atas tengah</small>
+              </div>
+              <label class="switch-toggle">
+                <input type="checkbox" id="toggleLogo" checked>
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group sub-options" id="logoCardWrap">
+              <label><input type="checkbox" id="toggleLogoGlow" checked> Efek Cahaya / Halo Biru (Sesuai Gambar)</label>
+              <label style="margin-top: 6px;"><input type="checkbox" id="logoCardBg"> Gunakan Kotak Putih Belakang Logo</label>
+            </div>
+
+            <!-- WATERMARK PAPUA (KANAN BAWAH) -->
+            <div class="brand-item-row">
+              <div class="brand-item-info">
+                <strong>Logo Kanan Bawah (Emblem Biru)</strong>
+                <small>Emblem resmi Amungsa Cares Papua warna biru tanpa teks</small>
+              </div>
+              <label class="switch-toggle">
+                <input type="checkbox" id="toggleWatermark" checked>
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group sub-options">
+              <label for="watermarkOpacity">Visibilitas Logo Kanan Bawah: <span id="watermarkOpacityVal">70%</span></label>
+              <input type="range" id="watermarkOpacity" min="5" max="100" value="70">
+            </div>
+
+            <!-- BRUSH & GRADIENT -->
+            <div class="brand-item-row">
+              <div class="brand-item-info">
+                <strong>Gradasi Navy & Vignette Gelap</strong>
+                <small>Efek gradasi bawah untuk keterbacaan teks maksimal</small>
+              </div>
+              <label class="switch-toggle">
+                <input type="checkbox" id="toggleBrush" checked>
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group sub-options">
+              <label for="brushOpacity">Kepekatan Bayangan: <span id="brushOpacityVal">95%</span></label>
+              <input type="range" id="brushOpacity" min="20" max="100" value="95">
+            </div>
+
+            <!-- MOTIF PAPUA -->
+            <div class="brand-item-row">
+              <div class="brand-item-info">
+                <strong>Motif Tradisional Papua</strong>
+                <small>Ornamen ukiran etnik di bagian bawah</small>
+              </div>
+              <label class="switch-toggle">
+                <input type="checkbox" id="toggleMotif" checked>
+                <span class="slider round"></span>
+              </label>
+            </div>
+
+            <!-- FOOTER SOCIAL BAR -->
+            <div class="brand-item-row">
+              <div class="brand-item-info">
+                <strong>Footer Sosial Media</strong>
+                <small>Ikon TikTok, IG, FB & username</small>
+              </div>
+              <label class="switch-toggle">
+                <input type="checkbox" id="toggleSocial" checked>
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group sub-options">
+              <label for="socialUsername">Username Akun</label>
+              <input type="text" id="socialUsername" value="amungsafoundation">
+            </div>
+          </div>
+        </div>
+
+        <!-- FOOTER EXPORT BUTTONS -->
+        <div class="sidebar-footer">
+          <div class="format-selector-row">
+            <button type="button" class="btn-fmt-choice active" data-fmt="png">PNG HD</button>
+            <button type="button" class="btn-fmt-choice" data-fmt="jpeg">JPG</button>
+            <button type="button" class="btn-fmt-choice" data-fmt="webp">WebP</button>
+          </div>
+          <button type="button" class="btn-action btn-primary w-100" id="btnDownloadSidePNG" style="margin-top: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span id="sideDownloadText">Simpan Hasil Foto (PNG)</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- CANVAS WORKSPACE STAGE -->
+      <main class="workbench">
+        <div class="canvas-viewport" id="canvasViewport">
+          <div class="canvas-wrapper" id="canvasWrapper">
+            <!-- The Master HTML5 Rendering Canvas -->
+            <canvas id="mainCanvas" width="1080" height="1350"></canvas>
+          </div>
+        </div>
+
+        <!-- BOTTOM WORKBENCH CONTROLS -->
+        <div class="workbench-toolbar">
+          <div class="zoom-controls">
+            <button class="btn-icon" id="btnZoomOut" title="Perkecil Tampilan">&minus;</button>
+            <input type="range" id="zoomSlider" min="25" max="150" value="55" title="Geser untuk Zoom Canvas">
+            <button class="btn-icon" id="btnZoomIn" title="Perbesar Tampilan">&plus;</button>
+            <span id="zoomLevelDisplay">55%</span>
+
+            <div class="zoom-presets-row">
+              <button class="btn-tool active" id="btnZoomFit" title="Sesuaikan dengan ukuran layar">Pas Layar</button>
+              <button class="btn-tool" id="btnZoom50" title="Zoom 50%">50%</button>
+              <button class="btn-tool" id="btnZoom75" title="Zoom 75%">75%</button>
+              <button class="btn-tool" id="btnZoom100" title="Ukuran Penuh 100%">100%</button>
+            </div>
+
+            <button class="btn-preview-modal" id="btnOpenZoomPreview" title="Buka Zoom Preview Hasil Foto Tajam HD">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              <span>Preview HD</span>
+            </button>
+          </div>
+
+          <div class="toolbar-info">
+            <span class="status-indicator"></span>
+            <span id="canvasDimLabel">1080 &times; 1350 px (Instagram 4:5)</span>
+            <span class="toolbar-tip-text">&bull; Drag foto di canvas untuk geser posisi</span>
+          </div>
+
+          <div class="export-quick" style="display: flex; align-items: center; gap: 4px;">
+            <span style="font-size: 11px; color: var(--text-muted); margin-right: 2px;">Format:</span>
+            <button class="btn-tool" id="btnExportPNG" title="Download Format PNG HD (Kualitas Tertinggi)">PNG</button>
+            <button class="btn-tool" id="btnExportJPG" title="Download Format JPG (Standar Instagram)">JPG</button>
+            <button class="btn-tool" id="btnExportWEBP" title="Download Format WebP (Ukuran Ringan & Efisien)">WebP</button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- MODAL IMPORT FOTO & TERAPKAN TEMPLATE -->
+    <div class="modal-backdrop" id="importModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <div class="modal-icon-badge">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
+                <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+              </svg>
+            </div>
+            <div>
+              <h3>Import Foto &amp; Terapkan Template</h3>
+              <small>Unggah foto Anda dan pilih salah satu template resmi Amungsa</small>
+            </div>
+          </div>
+          <button type="button" class="btn-modal-close" id="btnCloseImportModal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <!-- STEP 1: UPLOAD FOTO -->
+          <div class="modal-step">
+            <div class="step-badge-title">
+              <span class="step-number">1</span>
+              <strong>Pilih atau Seret Foto Anda</strong>
+            </div>
+            
+            <div class="modal-dropzone" id="modalDropzone">
+              <input type="file" id="modalFileInput" accept="image/*" multiple style="display:none;">
+              <div class="modal-dropzone-inner">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <span class="drop-main-text">Klik untuk Memilih Foto atau Seret ke Sini</span>
+                <span class="drop-sub-text">Bisa pilih 1 foto utama atau hingga 3 foto (untuk template kolase)</span>
+              </div>
+            </div>
+
+            <!-- Uploaded Thumbs Preview in Modal -->
+            <div class="modal-thumbs-grid" id="modalThumbsGrid" style="display:none;"></div>
+          </div>
+
+          <!-- STEP 2: PILIH TEMPLATE -->
+          <div class="modal-step">
+            <div class="step-badge-title">
+              <span class="step-number">2</span>
+              <strong>Pilih Template yang Ingin Diterapkan</strong>
+            </div>
+
+            <div class="modal-tpl-grid">
+              <label class="modal-tpl-card active" data-tpl="tpl1_berita">
+                <input type="radio" name="modalTplChoice" value="tpl1_berita" checked>
+                <div class="tpl-mini-preview preview-sinergi">
+                  <span class="prev-badge">SINERGI</span>
+                  <span class="prev-title">BERITA</span>
+                </div>
+                <div class="modal-tpl-info">
+                  <strong>Template 1: Sinergi &amp; Berita</strong>
+                  <small>Cover berita dengan badge sinergi, judul besar &amp; kalender</small>
+                </div>
+              </label>
+
+              <label class="modal-tpl-card" data-tpl="tpl2_dokumentasi">
+                <input type="radio" name="modalTplChoice" value="tpl2_dokumentasi">
+                <div class="tpl-mini-preview preview-clean">
+                  <span class="prev-clean-tag">DOKUMENTASI</span>
+                </div>
+                <div class="modal-tpl-info">
+                  <strong>Template 2: Dokumentasi Bersih</strong>
+                  <small>Fokus foto penuh bersih + watermark logo Amungsa Papua</small>
+                </div>
+              </label>
+
+              <label class="modal-tpl-card" data-tpl="tpl3_slogan">
+                <input type="radio" name="modalTplChoice" value="tpl3_slogan">
+                <div class="tpl-mini-preview preview-slogan">
+                  <span class="prev-script-tag">Dari Piring Sehat</span>
+                </div>
+                <div class="modal-tpl-info">
+                  <strong>Template 3: Dari Piring Sehat</strong>
+                  <small>Foto penuh + Grafis resmi asli PNG (Terkunci &amp; tidak boleh diganti)</small>
+                </div>
+              </label>
+
+              <label class="modal-tpl-card" data-tpl="tpl12_kolase3">
+                <input type="radio" name="modalTplChoice" value="tpl12_kolase3">
+                <div class="tpl-mini-preview preview-kolase">
+                  <span class="prev-box b1"></span>
+                  <span class="prev-box b2"></span>
+                  <span class="prev-box b3"></span>
+                </div>
+                <div class="modal-tpl-info">
+                  <strong>Template 4: Kolase 3 Frame</strong>
+                  <small>3 slot foto melayang rounded dengan shadow &amp; border putih</small>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-action btn-outline" id="btnCancelImportModal">Batal</button>
+          <button type="button" class="btn-action btn-primary" id="btnApplyImportModal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Terapkan Template Sekarang
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL ZOOM PREVIEW HD -->
+    <div class="modal-backdrop" id="previewModal">
+      <div class="modal-dialog" style="max-width: 92vw; width: 1000px; height: 90vh; display: flex; flex-direction: column;">
+        <div class="modal-header" style="padding: 12px 20px;">
+          <div class="modal-title-wrap">
+            <div class="modal-icon-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+            </div>
+            <div>
+              <h3>Zoom Preview Hasil Desain (HD)</h3>
+              <small id="previewModalSubtitle">Resolusi Penuh 1080 &times; 1350 px &bull; Kualitas Tajam 100%</small>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 6px; background: var(--bg-surface); padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border-subtle);">
+              <button class="btn-icon" id="btnModalZoomOut" style="width: 24px; height: 24px;">&minus;</button>
+              <span id="modalZoomVal" style="font-size: 11px; min-width: 38px; text-align: center; font-weight: 700; color: #38bdf8;">100%</span>
+              <button class="btn-icon" id="btnModalZoomIn" style="width: 24px; height: 24px;">&plus;</button>
+              <button class="btn-tool" id="btnModalZoomFit" style="padding: 2px 6px; font-size: 11px;">Fit</button>
+              <button class="btn-tool" id="btnModalZoom100" style="padding: 2px 6px; font-size: 11px;">100%</button>
+            </div>
+            <div style="display: flex; gap: 4px;">
+              <button type="button" class="btn-action btn-primary" id="btnModalDownloadPNG" style="padding: 6px 10px; font-size: 11px;">
+                Unduh PNG
+              </button>
+              <button type="button" class="btn-tool" id="btnModalDownloadJPG" style="padding: 6px 10px; font-size: 11px;">
+                JPG
+              </button>
+              <button type="button" class="btn-tool" id="btnModalDownloadWEBP" style="padding: 6px 10px; font-size: 11px;">
+                WebP
+              </button>
+            </div>
+            <button type="button" class="btn-modal-close" id="btnClosePreviewModal">&times;</button>
+          </div>
+        </div>
+        <div class="modal-body" style="padding: 0; flex: 1; overflow: auto; background: #080c14; display: flex; align-items: center; justify-content: center; position: relative;">
+          <div id="previewImageWrapper" style="padding: 40px; display: flex; align-items: center; justify-content: center; min-width: 100%; min-height: 100%;">
+            <img id="previewModalImg" src="" alt="Preview HD" style="box-shadow: 0 25px 60px rgba(0,0,0,0.85); border-radius: 4px; border: 2px solid #1e293b; transition: transform 0.15s ease-out; transform-origin: center center;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toastMessage"></div>
+  </div>
+
+  <script src="assets_data.js?v=13"></script>
+  <script src="app.js?v=13"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+# Photoshop Raw Files and Intermediate Artworks
+assets/1MENTAH/
+*.psd
+*.psb
+assets/*.psb
+assets/extracted_*
+assets/composite_*
+assets/*_sample_*
+assets/bhintuka_*
+assets/exact_*
+assets/layer_*
+assets/reses_*
+assets/test_*
+assets/*_b64.txt
+assets/ok*.png
+assets/extracted*.png
+
+# Build & Scratch Scripts
+scratch/
+*.py
+*.pyc
+__pycache__/
+test_*.png
+inspect_assets.js
+
+# Editor and System Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
