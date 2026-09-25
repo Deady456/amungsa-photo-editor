@@ -1963,26 +1963,39 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
 
   /* TOP NAVBAR ON MOBILE */
   .navbar {
-    height: 54px;
-    padding: 0 10px;
-    gap: 6px;
+    height: 46px;
+    padding: 0 8px;
+    gap: 5px;
     z-index: 50;
   }
 
   .nav-brand {
-    gap: 8px;
+    gap: 6px;
+  }
+
+  .btn-hamburger {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+  }
+
+  .btn-hamburger svg {
+    width: 18px;
+    height: 18px;
   }
 
   .brand-logo-badge {
-    width: 28px;
-    height: 28px;
-    padding: 2px;
+    width: 24px;
+    height: 24px;
+    padding: 1px;
     border-radius: 4px;
   }
 
   .brand-text h1 {
-    font-size: 13px;
+    font-size: 11px;
+    font-weight: 700;
     letter-spacing: -0.2px;
+    white-space: nowrap;
   }
 
   .brand-text .badge-tag {
@@ -1990,17 +2003,19 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
   }
 
   .nav-actions {
-    gap: 6px;
+    gap: 4px;
   }
 
   .ratio-selector {
     padding: 2px;
     gap: 2px;
+    border-radius: 5px;
   }
 
   .btn-toggle {
-    font-size: 11px;
-    padding: 4px 8px;
+    font-size: 10px;
+    padding: 3px 6px;
+    border-radius: 4px;
   }
 
   .ratio-short {
@@ -2012,9 +2027,15 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
   }
 
   #btnNavImportModal {
-    padding: 6px 10px;
-    font-size: 11px;
-    gap: 4px;
+    padding: 5px 8px;
+    font-size: 10px;
+    border-radius: 5px;
+    gap: 3px;
+  }
+
+  #btnNavImportModal svg {
+    width: 15px;
+    height: 15px;
   }
 
   .btn-import-text {
@@ -2026,18 +2047,34 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
   }
 
   .btn-action {
-    padding: 6px 10px;
+    padding: 5px 9px;
     font-size: 11px;
+    border-radius: 5px;
+  }
+
+  .btn-action svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .dropdown-split .btn-action {
+    border-radius: 5px 0 0 5px;
   }
 
   .btn-dropdown-arrow {
-    padding: 0 6px;
+    padding: 0 4px;
+    border-radius: 0 5px 5px 0;
+  }
+
+  .btn-dropdown-arrow svg {
+    width: 12px;
+    height: 12px;
   }
 
   /* WORKBENCH TAKES FULLSCREEN ON MOBILE (FOTO TERLIHAT JELAS!) */
   .main-body {
     position: relative;
-    height: calc(100dvh - 54px);
+    height: calc(100dvh - 46px);
     width: 100vw;
     display: block;
     overflow: hidden;
@@ -2060,8 +2097,8 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
   .canvas-viewport {
     flex: 1;
     width: 100%;
-    height: calc(100% - 44px);
-    padding: 14px;
+    height: calc(100% - 38px);
+    padding: 8px;
     overflow: hidden;
     background-size: 16px 16px;
   }
@@ -2070,48 +2107,77 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
     touch-action: none;
   }
 
-
-  /* WORKBENCH TOOLBAR */
+  /* WORKBENCH TOOLBAR: SLIM & SISAKAN FITUR ZOOMING SAJA */
   .workbench-toolbar {
-    height: 44px;
+    height: 38px;
     padding: 0 10px;
-    gap: 4px;
+    justify-content: center;
+    background: rgba(10, 15, 29, 0.96);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     flex-shrink: 0;
   }
 
-  .zoom-controls {
-    gap: 2px;
-  }
-
-  .zoom-controls .btn-icon {
-    width: 26px;
-    height: 26px;
-    font-size: 15px;
-  }
-
+  /* HILANGKAN TOMBOL FOOTER PREVIEW HD, FORMAT, & LAINNYA DI MOBILE */
+  .export-quick,
+  .toolbar-info,
+  #btnOpenZoomPreview,
   #zoomSlider,
   #btnZoom50,
   #btnZoom75,
   #btnZoom100 {
-    display: none;
+    display: none !important;
   }
 
-  .zoom-level {
+  /* SISAKAN FITUR ZOOMING */
+  .zoom-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: auto;
+  }
+
+  .zoom-controls .btn-icon {
+    width: 28px;
+    height: 26px;
+    font-size: 16px;
+    border-radius: 5px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .zoom-controls .btn-icon:active {
+    background: #334155;
+    transform: scale(0.94);
+  }
+
+  #zoomLevelDisplay {
     font-size: 11px;
-    min-width: 32px;
+    font-weight: 700;
+    color: #94a3b8;
+    min-width: 36px;
+    text-align: center;
   }
 
-  .btn-tool {
-    padding: 4px 8px;
+  .zoom-presets-row {
+    display: flex;
+    margin-left: 2px;
+  }
+
+  #btnZoomFit {
+    padding: 4px 10px;
     font-size: 11px;
-  }
-
-  .toolbar-info {
-    display: none;
-  }
-
-  .export-quick {
-    gap: 3px;
+    font-weight: 600;
+    border-radius: 5px;
+    height: 26px;
+    background: #0284c7;
+    color: #ffffff;
+    border: none;
   }
 
   /* ====================================================
@@ -2122,8 +2188,8 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
     top: 0;
     left: 0;
     bottom: 0;
-    width: 88vw;
-    max-width: 380px;
+    width: 86vw;
+    max-width: 330px;
     height: 100vh;
     height: 100dvh;
     background: var(--bg-dark);
@@ -2145,7 +2211,7 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 16px;
+    padding: 10px 14px;
     background: var(--bg-surface);
     border-bottom: 1px solid var(--border-subtle);
     flex-shrink: 0;
@@ -2154,9 +2220,9 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
   .sidebar-mobile-header .sm-title {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     color: #ffffff;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
   }
 
@@ -2164,15 +2230,15 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
     background: transparent;
     border: none;
     color: var(--text-muted);
-    font-size: 26px;
+    font-size: 22px;
     line-height: 1;
-    width: 34px;
-    height: 34px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-radius: var(--radius-sm);
+    border-radius: 5px;
   }
 
   .btn-close-sidebar:hover,
@@ -2202,14 +2268,15 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
     pointer-events: auto;
   }
 
+  /* TAB NAVIGATION COMPACT */
   .tabs-nav {
     display: flex;
     overflow-x: auto;
     border-bottom: 1px solid var(--border-subtle);
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    height: 42px;
-    min-height: 42px;
+    height: 36px;
+    min-height: 36px;
     background: var(--bg-darker);
     flex-shrink: 0;
   }
@@ -2219,56 +2286,151 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
   }
 
   .tab-btn {
-    padding: 8px 12px;
+    padding: 6px 10px;
     font-size: 11px;
     gap: 4px;
     white-space: nowrap;
     flex-shrink: 0;
   }
 
+  .tab-btn svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  /* TAB CONTENT & PANEL SECTIONS COMPACT */
   .tab-content {
     flex: 1;
-    padding: 14px;
+    padding: 10px 12px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
-  .sidebar-footer {
-    padding: 10px 14px;
-    flex-shrink: 0;
-    background: var(--bg-surface);
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .sidebar-footer .btn-action {
-    padding: 10px 14px;
-    font-size: 13px;
-  }
-
-  /* PANEL SECTIONS & GRIDS IN DRAWER */
   .panel-section {
-    padding: 12px;
-    margin-bottom: 12px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+
+  .panel-title {
+    font-size: 10px;
+    margin-bottom: 6px;
+  }
+
+  .btn-primary {
+    padding: 6px 10px;
+    font-size: 11px;
+    border-radius: 5px;
+  }
+
+  .upload-zone-compact {
+    padding: 10px 8px;
+    margin-top: 8px;
+    border-radius: 6px;
+  }
+
+  .upload-zone-compact svg {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 2px;
+  }
+
+  .upload-zone-compact p {
+    font-size: 11px;
+  }
+
+  .upload-zone-compact span {
+    font-size: 9px;
   }
 
   .grid-2col,
   .grid-3col {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 6px;
   }
 
   .templates-grid {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 6px;
   }
 
   .tpl-card {
-    padding: 8px;
-    gap: 10px;
+    padding: 6px 8px;
+    gap: 8px;
+    border-radius: 6px;
+  }
+
+  .tpl-preview {
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+  }
+
+  .tpl-title {
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .tpl-desc {
+    font-size: 9.5px;
+    line-height: 1.2;
+  }
+
+  .form-group {
+    margin-bottom: 8px;
+  }
+
+  .form-group label {
+    font-size: 10px;
+    margin-bottom: 3px;
+  }
+
+  .input-text, textarea, select {
+    padding: 5px 8px;
+    font-size: 11px;
+    border-radius: 5px;
+  }
+
+  .btn-tool {
+    padding: 3px 7px;
+    font-size: 10px;
+    border-radius: 4px;
   }
 
   .radio-pill-group {
     flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .radio-pill {
+    padding: 3px 7px;
+    font-size: 10px;
+    border-radius: 4px;
+  }
+
+  /* DRAWER FOOTER (EXPORT) */
+  .sidebar-footer {
+    padding: 8px 12px;
+    flex-shrink: 0;
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .format-selector-row {
+    gap: 4px;
+  }
+
+  .btn-fmt-choice {
+    padding: 5px 8px;
+    font-size: 10px;
+    border-radius: 4px;
+  }
+
+  .sidebar-footer .btn-action {
+    padding: 8px 12px;
+    font-size: 11.5px;
+    border-radius: 6px;
+    margin-top: 6px !important;
   }
 
   /* MODALS ON MOBILE */
