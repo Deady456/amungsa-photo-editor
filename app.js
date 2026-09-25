@@ -899,6 +899,40 @@ function setupEventListeners() {
     }, { passive: false });
   }
 
+  // ==========================================
+  // MOBILE SIDEBAR DRAWER TOGGLE (HIDE/SHOW SETUP)
+  // ==========================================
+  const btnToggleSidebar = document.getElementById('btnToggleSidebar');
+  const btnCloseSidebar = document.getElementById('btnCloseSidebar');
+  const btnFloatingSetup = document.getElementById('btnFloatingSetup');
+  const sidebar = document.getElementById('sidebar');
+  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+  function openSidebarDrawer() {
+    if (sidebar) sidebar.classList.add('open');
+    if (sidebarBackdrop) sidebarBackdrop.classList.add('show');
+  }
+
+  function closeSidebarDrawer() {
+    if (sidebar) sidebar.classList.remove('open');
+    if (sidebarBackdrop) sidebarBackdrop.classList.remove('show');
+    setTimeout(fitCanvasToScreen, 220);
+  }
+
+  if (btnToggleSidebar) {
+    btnToggleSidebar.addEventListener('click', () => {
+      if (sidebar && sidebar.classList.contains('open')) {
+        closeSidebarDrawer();
+      } else {
+        openSidebarDrawer();
+      }
+    });
+  }
+
+  if (btnFloatingSetup) btnFloatingSetup.addEventListener('click', openSidebarDrawer);
+  if (btnCloseSidebar) btnCloseSidebar.addEventListener('click', closeSidebarDrawer);
+  if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebarDrawer);
+
   // HD Zoom Preview Modal Listeners
   const btnOpenZoomPreview = document.getElementById('btnOpenZoomPreview');
   const btnClosePreviewModal = document.getElementById('btnClosePreviewModal');

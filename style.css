@@ -1900,8 +1900,24 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
 }
 
 /* ========================================================
-   MOBILE & TABLET RESPONSIVE STYLES (Smart Split Layout)
+   RESPONSIVE OFF-CANVAS DRAWER & FULLSCREEN MOBILE CANVAS
    ======================================================== */
+
+.btn-hamburger {
+  display: none;
+}
+
+.sidebar-mobile-header {
+  display: none;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+.floating-setup-btn {
+  display: none;
+}
 
 .ratio-short {
   display: none;
@@ -1924,11 +1940,40 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
     overflow: hidden;
   }
 
+  /* TOMBOL TIGA GARIS (HAMBURGER) SISI KIRI */
+  .btn-hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: #38bdf8;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+    margin-right: 4px;
+  }
+
+  .btn-hamburger:hover,
+  .btn-hamburger:active {
+    background: var(--bg-surface-hover);
+    color: #ffffff;
+    transform: scale(0.96);
+  }
+
   /* TOP NAVBAR ON MOBILE */
   .navbar {
-    height: 52px;
+    height: 54px;
     padding: 0 10px;
     gap: 6px;
+    z-index: 50;
+  }
+
+  .nav-brand {
+    gap: 8px;
   }
 
   .brand-logo-badge {
@@ -1992,24 +2037,35 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
     padding: 0 6px;
   }
 
-  /* MAIN BODY (VERTICAL STACK) */
+  /* WORKBENCH TAKES FULLSCREEN ON MOBILE (FOTO TERLIHAT JELAS!) */
   .main-body {
-    flex-direction: column;
-    height: calc(100dvh - 52px);
+    position: relative;
+    height: calc(100dvh - 54px);
+    width: 100vw;
+    display: block;
     overflow: hidden;
   }
 
-  /* WORKBENCH (CANVAS PREVIEW TOP SECTION) */
   .workbench {
-    order: 1;
-    flex: 0 0 44vh;
-    height: 44vh;
-    min-height: 180px;
-    border-bottom: 2px solid var(--border-subtle);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    z-index: 1;
   }
 
   .canvas-viewport {
-    padding: 10px;
+    flex: 1;
+    width: 100%;
+    height: calc(100% - 44px);
+    padding: 14px;
+    overflow: hidden;
     background-size: 16px 16px;
   }
 
@@ -2017,10 +2073,38 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
     touch-action: none;
   }
 
+  /* FLOATING SETUP BUTTON DI KANVAS */
+  .floating-setup-btn {
+    position: absolute;
+    bottom: 58px;
+    left: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(15, 23, 42, 0.92);
+    border: 1.5px solid #38bdf8;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 9px 16px;
+    border-radius: 9999px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 15px rgba(56, 189, 248, 0.3);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    z-index: 30;
+    transition: all 0.15s ease;
+  }
+
+  .floating-setup-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* WORKBENCH TOOLBAR */
   .workbench-toolbar {
-    height: 38px;
-    padding: 0 8px;
+    height: 44px;
+    padding: 0 10px;
     gap: 4px;
+    flex-shrink: 0;
   }
 
   .zoom-controls {
@@ -2028,9 +2112,9 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
   }
 
   .zoom-controls .btn-icon {
-    width: 24px;
-    height: 24px;
-    font-size: 14px;
+    width: 26px;
+    height: 26px;
+    font-size: 15px;
   }
 
   #zoomSlider,
@@ -2046,7 +2130,7 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
   }
 
   .btn-tool {
-    padding: 3px 6px;
+    padding: 4px 8px;
     font-size: 11px;
   }
 
@@ -2058,16 +2142,92 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
     gap: 3px;
   }
 
-  /* SIDEBAR (CONTROLS BOTTOM SECTION) */
+  /* ====================================================
+     SIDEBAR AS SLIDE-OUT DRAWER (OFF-CANVAS SETUP)
+     ==================================================== */
   .sidebar {
-    order: 2;
-    flex: 1;
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    height: calc(56vh - 52px);
-    border-right: none;
-    border-top: 1px solid var(--border-subtle);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 88vw;
+    max-width: 380px;
+    height: 100vh;
+    height: 100dvh;
+    background: var(--bg-dark);
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 12px 0 45px rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-subtle);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* DRAWER HEADER WITH CLOSE BUTTON */
+  .sidebar-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .sidebar-mobile-header .sm-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .btn-close-sidebar {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 26px;
+    line-height: 1;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+  }
+
+  .btn-close-sidebar:hover,
+  .btn-close-sidebar:active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* SIDEBAR BACKDROP */
+  .sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    display: block;
+  }
+
+  .sidebar-backdrop.show {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .tabs-nav {
@@ -2076,9 +2236,10 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
     border-bottom: 1px solid var(--border-subtle);
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    height: 40px;
-    min-height: 40px;
+    height: 42px;
+    min-height: 42px;
     background: var(--bg-darker);
+    flex-shrink: 0;
   }
 
   .tabs-nav::-webkit-scrollbar {
@@ -2086,7 +2247,7 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
   }
 
   .tab-btn {
-    padding: 6px 12px;
+    padding: 8px 12px;
     font-size: 11px;
     gap: 4px;
     white-space: nowrap;
@@ -2094,22 +2255,25 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
   }
 
   .tab-content {
-    padding: 12px;
+    flex: 1;
+    padding: 14px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
   .sidebar-footer {
-    padding: 8px 12px;
+    padding: 10px 14px;
     flex-shrink: 0;
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-subtle);
   }
 
   .sidebar-footer .btn-action {
-    padding: 9px 12px;
+    padding: 10px 14px;
     font-size: 13px;
   }
 
-  /* PANEL SECTIONS & GRIDS */
+  /* PANEL SECTIONS & GRIDS IN DRAWER */
   .panel-section {
     padding: 12px;
     margin-bottom: 12px;
@@ -2169,14 +2333,5 @@ input[type="color"]::-webkit-color-swatch { border: 2px solid var(--border-subtl
   .btn-toggle {
     padding: 3px 5px;
     font-size: 10px;
-  }
-
-  .workbench {
-    flex: 0 0 42vh;
-    height: 42vh;
-  }
-
-  .sidebar {
-    height: 58vh;
   }
 }
