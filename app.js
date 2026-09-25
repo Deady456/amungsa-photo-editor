@@ -904,7 +904,6 @@ function setupEventListeners() {
   // ==========================================
   const btnToggleSidebar = document.getElementById('btnToggleSidebar');
   const btnCloseSidebar = document.getElementById('btnCloseSidebar');
-  const btnFloatingSetup = document.getElementById('btnFloatingSetup');
   const sidebar = document.getElementById('sidebar');
   const sidebarBackdrop = document.getElementById('sidebarBackdrop');
 
@@ -929,7 +928,6 @@ function setupEventListeners() {
     });
   }
 
-  if (btnFloatingSetup) btnFloatingSetup.addEventListener('click', openSidebarDrawer);
   if (btnCloseSidebar) btnCloseSidebar.addEventListener('click', closeSidebarDrawer);
   if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebarDrawer);
 
