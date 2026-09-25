@@ -269,8 +269,8 @@ window.addEventListener('DOMContentLoaded', async () => {
 // LOAD SYSTEM BRANDING ASSETS EXTRACTED FROM OFFICIAL .PSD
 async function loadAssets() {
   const assetMap = {
-    logo: (window.AMUNGSA_ASSETS && window.AMUNGSA_ASSETS.logo) || 'assets/Logo Amungsa Cares Papua.png',
-    watermark: (window.AMUNGSA_ASSETS && window.AMUNGSA_ASSETS.watermark) || 'assets/watermark_official_scaled.png',
+    logo: (window.AMUNGSA_ASSETS && window.AMUNGSA_ASSETS.logo) || 'assets/logo_header_hd.png',
+    watermark: (window.AMUNGSA_ASSETS && window.AMUNGSA_ASSETS.watermark) || 'assets/watermark_hd.png',
     designOverlay: (window.AMUNGSA_ASSETS && window.AMUNGSA_ASSETS.designOverlay) || 'assets/design_official_overlay.png',
     designOverlaySquare: (window.AMUNGSA_ASSETS && window.AMUNGSA_ASSETS.designOverlaySquare) || 'assets/design_official_overlay_square.png',
     motif: (window.AMUNGSA_ASSETS && window.AMUNGSA_ASSETS.motif) || 'assets/motif_official_overlay.png',
@@ -1614,6 +1614,10 @@ function render() {
   const w = state.canvasW;
   const h = state.canvasH;
 
+  // High-quality bicubic smoothing for crisp canvas rendering & export
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+
   // Clear Canvas with Deep Navy Slate Base
   ctx.save();
   const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
@@ -2089,14 +2093,16 @@ function renderHeaderLogo(w, h) {
   if (!logo) return;
 
   const isKolase = (state.template === 'tpl12_kolase3');
-  // Ukuran proporsional sesuai PSD: Lele kolase (145px) vs Sinergi/Berita (100px)
-  const logoH = isKolase ? 145 : 100;
+  // Ukuran proporsional sesuai request (diperbesar sedikit & HD tajam)
+  const logoH = isKolase ? 165 : 128;
   const aspect = (logo.width && logo.height) ? (logo.width / logo.height) : (2412 / 3248);
   const logoW = Math.round(logoH * aspect);
   const logoX = Math.round((w - logoW) / 2);
-  const logoY = isKolase ? 18 : 24;
+  const logoY = isKolase ? 16 : 22;
 
   ctx.save();
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
 
   // 1. Blue Glowing Halo Behind Top Circular Emblem (matches official templates)
   if (state.branding.logoGlow) {
@@ -2153,14 +2159,15 @@ function renderWatermarkLogo(w, h, opacity = 0.70) {
   if (!wm) return;
 
   ctx.save();
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
   ctx.globalAlpha = Math.max(0, Math.min(1, opacity));
 
-  // Authentic Blue Emblem without text
-  // Maintain natural proportional aspect ratio (no vertical distortion)
+  // Authentic Blue Emblem without text (High Definition, crisp when exported & zoomed)
   const isSquare = (state.aspectRatio === '1:1');
-  const wmW = 272;
-  const natW = wm.naturalWidth || wm.width || 272;
-  const natH = wm.naturalHeight || wm.height || 266;
+  const wmW = 276;
+  const natW = wm.naturalWidth || wm.width || 800;
+  const natH = wm.naturalHeight || wm.height || 784;
   const wmH = Math.round(wmW * (natH / natW));
   const wmX = isSquare ? (w - wmW - 25) : 720;
   const wmY = isSquare ? (h - wmH - 25) : 929;
@@ -2490,7 +2497,7 @@ function exportImage(format = 'image/png', filename = 'amungsa_post.png') {
 
   const link = document.createElement('a');
   link.download = filename;
-  link.href = canvas.toDataURL(format, 0.95);
+  link.href = canvas.toDataURL(format, 1.0);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
