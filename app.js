@@ -2201,14 +2201,18 @@ function renderPapuaMotif(w, h, opacity = 1.0) {
 function renderSocialFooter(w, h) {
   const s = state.branding;
   ctx.save();
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
 
   const isSquare = (state.aspectRatio === '1:1');
   const cImg = state.assets.contactWide || state.assets.contact;
 
   if (cImg && s.socialUsername === 'amungsafoundation') {
-    const cW = cImg.width;
-    const cH = cImg.height;
-    const cX = (state.assets.contactWide && !isSquare) ? 61 : ((w - cW) / 2);
+    // HD images are 4x scaled — render at original display size for pixel-perfect sharpness
+    const SCALE = 4;
+    const cW = Math.round((cImg.naturalWidth || cImg.width) / SCALE);
+    const cH = Math.round((cImg.naturalHeight || cImg.height) / SCALE);
+    const cX = (state.assets.contactWide && !isSquare) ? 61 : Math.round((w - cW) / 2);
     const cY = isSquare ? (h - cH - 20) : 1260;
 
     ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
